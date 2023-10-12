@@ -49,8 +49,12 @@ app.post('/advanced-search', async (req, res) => {
      
     try {
         const products = await db.collection('produit').find(query).toArray();
-
-        res.json({ products });
+       if (products.length == 0){
+         res.send("No products match the specified criteria.")
+       }else{
+           
+           res.json({ products });
+       }
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
